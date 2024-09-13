@@ -38,7 +38,16 @@ const Detail = () => {
         localStorage.setItem('data', JSON.stringify(newArray));
     }
     const deleteEvent = () => {
-        console.log(`${id} 대상을 삭제 합니다.`);
+       let newArray = [];
+       array.forEach(row => {
+        if( row.id !== Number(id) ) {
+            // 삭제 대상 id가 아닌 경우는 기존 데이터 넣기
+            newArray = [...newArray, row];
+        }
+       });
+       //변경된 배열 다시 저장
+       setArray(newArray);
+       localStorage.setItem('data', JSON.stringify(newArray));
     }
  //   let title = "제목";
  //   let content = "글 내용";
@@ -60,7 +69,7 @@ const Detail = () => {
                         <textarea type="text" className="form-control" rows="5" name="content" value={data.content} onChange={handlechange} style={{resize: 'none'}}></textarea>
                     </div>
                     <div className="btn-group">
-                        <button type="submit" className="btn btn-info">수정</button>
+                        <button type="submit" className="btn btn-info" >수정</button>
                         <button type="button" className="btn btn-danger" onClick={deleteEvent}>삭제</button>
                         <a className="btn btn-primary" href="/">목록</a>
                     </div>
